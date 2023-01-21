@@ -1,10 +1,30 @@
 import React, { useState } from 'react';
 import people from './data';
-import { FaChevronLeft, FaChevronRight, FaQuoteRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaQuoteRight,FaChevronCircleLeft,FaChevronCircleRight } from 'react-icons/fa';
+
 
 const Review = () => {
   const [index,setIndex] = useState(0); 
   const {name,job,image,text} = people[index];
+  function handleLeft()
+  {
+    setIndex(prev => (prev+1)%4);
+  }
+  const handleright = () => {
+    setIndex((prev) => {
+      if(prev == 0)
+      {
+        return 3;
+      }
+      else{
+        return prev-1;
+      }
+    });
+  }
+  const handleRandom = () => {
+    let num = Math.floor(Math.random()*people.length);
+    setIndex(num);
+  }
   return( 
   <article className='review'>
     <div className='img-container'>
@@ -14,10 +34,16 @@ const Review = () => {
     <h4 className='author'>{name}</h4>
     <p className='job'>{job}</p>
     <p className='info'>{text}</p>
-    <button className='prev-button'>
-      
-    </button>
-  </article>
+    <div className='button-container'>
+      <button className='prev-btn' onClick={handleright}>
+        <FaChevronCircleLeft/>
+      </button>
+      <button className='next-btn' onClick = {handleLeft}>
+        <FaChevronCircleRight/>
+      </button>
+    </div>
+    <button className='random-btn' onClick={handleRandom}>surprise me</button>
+    </article>
   )
 };
 
